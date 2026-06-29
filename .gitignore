@@ -1,0 +1,50 @@
+# deps
+node_modules/
+.pnpm-store/
+
+# next
+/.next/
+/out/
+next-env.d.ts
+
+# build / cache
+*.tsbuildinfo
+.bun/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# local databases
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# agent / scratch
+.manus
+.manus/
+
+# editor / os
+.DS_Store
+.vscode/
+.idea/
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# vercel
+.vercel
+.gstack/
+
+# generated at deploy time by scripts/build-pm-registry.mjs
+# keep the file on disk for local dev; Railway regenerates it on every deploy
+lib/wc2026/pmRegistry.json
+
+# playwright artifacts
+test-results/
+playwright-report/

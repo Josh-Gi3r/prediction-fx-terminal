@@ -1,0 +1,27 @@
+/* /account page styles — scoped under .ds4 */
+
+.ds4 .acct-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.ds4 .acct-tab-list {
+  /* Override the default rounded-full pill list to a flat strip */
+  border-radius: var(--r, 10px);
+  gap: 2px;
+}
+
+@media (max-width: 600px) {
+  .ds4 .acct-tab-list {
+    width: 100%;
+    justify-content: stretch;
+  }
+  .ds4 .acct-tab-list button {
+    flex: 1;
+  }
+}

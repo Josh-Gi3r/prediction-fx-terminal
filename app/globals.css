@@ -1,0 +1,264 @@
+@import "tailwindcss";
+
+/* ============================================================
+   App design tokens
+   Dark-first, prediction-market / trading aesthetic
+   Edit these tokens to customize the visual theme
+   ============================================================ */
+
+@theme {
+  /* Base palette */
+  --color-bg-0: oklch(0.14 0.012 250); /* deepest background */
+  --color-bg-1: oklch(0.17 0.013 250); /* card surface */
+  --color-bg-2: oklch(0.2 0.014 250); /* elevated surface */
+  --color-bg-3: oklch(0.24 0.015 250); /* hover state */
+
+  --color-line-1: oklch(0.28 0.012 250 / 0.7); /* subtle borders */
+  --color-line-2: oklch(0.34 0.014 250 / 0.9); /* prominent borders */
+
+  --color-fg-0: oklch(0.98 0.005 250); /* primary text */
+  --color-fg-1: oklch(0.78 0.008 250); /* secondary text */
+  --color-fg-2: oklch(0.58 0.01 250); /* muted text */
+  --color-fg-3: oklch(0.42 0.012 250); /* placeholder */
+
+  /* Brand accents */
+  --color-accent-green: oklch(0.78 0.18 152); /* deliverable / long / up */
+  --color-accent-green-dim: oklch(0.42 0.1 152);
+  --color-accent-blue: oklch(0.72 0.16 235); /* differential / info */
+  --color-accent-blue-dim: oklch(0.38 0.1 235);
+  --color-accent-gold: oklch(0.84 0.15 85); /* prediction / WC */
+  --color-accent-gold-dim: oklch(0.48 0.08 85);
+  --color-accent-red: oklch(0.7 0.2 25); /* short / down / liq */
+  --color-accent-red-dim: oklch(0.38 0.12 25);
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* Shadows tuned for dark surfaces */
+  --shadow-card: 0 1px 0 oklch(1 0 0 / 0.04) inset, 0 4px 24px oklch(0 0 0 / 0.4);
+  --shadow-elevated: 0 1px 0 oklch(1 0 0 / 0.06) inset, 0 12px 48px oklch(0 0 0 / 0.5);
+  --shadow-glow-green: 0 0 0 1px oklch(0.78 0.18 152 / 0.3), 0 0 32px oklch(0.78 0.18 152 / 0.15);
+  --shadow-glow-blue: 0 0 0 1px oklch(0.72 0.16 235 / 0.3), 0 0 32px oklch(0.72 0.16 235 / 0.15);
+
+  /* Motion */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Animation curves */
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-pulse-dot: pulse-dot 1.4s ease-in-out infinite;
+  --animate-tick-up: tick-up 0.3s var(--ease-out-quart);
+}
+
+/* Reset + base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-bg-0);
+  color: var(--color-fg-0);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01", "ss03";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: radial-gradient(
+      ellipse 80% 60% at 50% -20%,
+      oklch(0.22 0.04 235 / 0.4),
+      transparent 70%
+    ), radial-gradient(ellipse 60% 40% at 90% 10%, oklch(0.2 0.05 152 / 0.2), transparent 60%),
+    var(--color-bg-0);
+}
+
+/* Numeric values use tabular figures for stability */
+.tabular,
+[data-numeric] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Mono price label */
+.price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Selection */
+::selection {
+  background: oklch(0.72 0.16 235 / 0.35);
+  color: var(--color-fg-0);
+}
+
+/* Scrollbar — minimal */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-1);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-line-2);
+  background-clip: padding-box;
+}
+
+/* Focus rings — a11y + premium feel */
+:focus-visible {
+  outline: 2px solid oklch(0.72 0.16 235 / 0.6);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Keyframes */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes tick-up {
+  0% {
+    transform: translateY(2px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   App light design system. Edit CSS custom properties below to customize the theme.
+   Legacy --color-* dark tokens above stay
+   until every page is migrated, then get deleted.
+   Fonts: --f-display (Sora) · --f-body (Manrope) · --f-tech (Chakra Petch)
+   are provided by next/font in app/layout.tsx.
+   ════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ---- surfaces ---- */
+  --bg: #ffffff;
+  --bg-soft: #f4f7fe;
+  --bg-tint: #eaf1fd;
+  --bg-deep: #0a0e1a; /* dark sections / footer */
+  --bg-deep-2: #0d1426;
+
+  /* ---- ink ---- */
+  --ink: #0a0e1a;
+  --ink-2: #1c2740;
+  --muted: #5e6a82;
+  --muted-2: #8a94a8;
+  --line: #e3eaf6;
+  --line-2: #d4def0;
+
+  /* ---- brand ---- */
+  --brand: #2563eb; /* electric royal blue */
+  --brand-2: #1d4ed8;
+  --brand-3: #3b82f6;
+  --navy: #0b1437; /* logo deep navy */
+  --accent: #10d9a0; /* mint / teal */
+  --accent-2: #0bb88a;
+
+  /* ---- market semantics ---- */
+  --yes: #13b981;
+  --yes-soft: #e7f8f1;
+  --no: #f0436a;
+  --no-soft: #fdebef;
+  --up: #13b981;
+  --down: #f0436a;
+
+  /* ---- gradients ---- */
+  --grad-brand: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --grad-logo: linear-gradient(140deg, #4f8bff 0%, #1d4ed8 45%, #0b1437 100%);
+  --grad-mint: linear-gradient(135deg, #2ee6b0 0%, #0bb88a 100%);
+  --grad-sky: linear-gradient(180deg, #ffffff 0%, #eef4ff 60%, #e3edff 100%);
+
+  /* ---- radii / shadow ---- */
+  --r-sm: 10px;
+  --r: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --sh-1: 0 1px 2px rgba(11, 20, 55, 0.05), 0 2px 8px rgba(11, 20, 55, 0.04);
+  --sh-2: 0 8px 24px rgba(13, 31, 82, 0.08), 0 2px 6px rgba(13, 31, 82, 0.05);
+  --sh-3: 0 20px 50px rgba(15, 40, 110, 0.14), 0 6px 16px rgba(15, 40, 110, 0.07);
+  --sh-brand: 0 16px 40px rgba(37, 99, 235, 0.22);
+
+  /* ---- type ---- */
+  --f-display: "Sora", system-ui, sans-serif;
+  --f-ui: "Manrope", system-ui, sans-serif;
+  --f-tech: "Chakra Petch", "Sora", system-ui, sans-serif;
+
+  --maxw: min(1600px, 100%);
+}
+
+/* ── MobileGate pre-hydration ── */
+/* Show mobile shell only on narrow viewports before JS hydrates */
+.mobile-gate-mobile {
+  display: none;
+}
+.mobile-gate-desktop {
+  display: contents;
+}
+@media (max-width: 639px) {
+  .mobile-gate-mobile {
+    display: contents;
+  }
+  .mobile-gate-desktop {
+    display: none;
+  }
+}

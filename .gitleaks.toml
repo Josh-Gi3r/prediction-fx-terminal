@@ -1,0 +1,27 @@
+# .gitleaks.toml — secret scan config for Prediction-FX
+# Extends gitleaks defaults; only allowlist rules are added here.
+# Full rule set comes from gitleaks built-in config.
+
+title = "Prediction-FX gitleaks config"
+
+[allowlist]
+  description = "Paths and patterns that are safe to skip"
+
+  # Generated/vendored trees — no secrets ever land here
+  paths = [
+    "node_modules",
+    "\\.next",
+    "public/",
+  ]
+
+  # NEXT_PUBLIC_ vars are intentionally public (exposed to the browser bundle).
+  # They are never secret values.
+  regexes = [
+    "NEXT_PUBLIC_[A-Z0-9_]+=",
+  ]
+
+  # Test fixtures may contain obviously fake keys for unit tests.
+  # Apply only to test files, not to app code.
+  [[allowlist.commits]]
+    description = "Allow placeholder/fake secrets in test fixture files"
+    paths = ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts"]

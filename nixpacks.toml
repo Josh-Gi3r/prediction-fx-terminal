@@ -1,0 +1,11 @@
+# Nixpacks build providers — explicit pin so Railway doesn't auto-select
+# Node 18 (now EOL and removed from nixpkgs as of April 2025).
+#
+# Node is required even though we use Bun as the package manager because
+# Next.js 15 internals still shell out to a Node-compatible runtime for
+# parts of the build.
+
+providers = ["node"]
+
+[phases.setup]
+nixPkgs = ["nodejs_22", "bun"]

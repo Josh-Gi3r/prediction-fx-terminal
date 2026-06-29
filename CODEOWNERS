@@ -1,0 +1,4 @@
+# CODEOWNERS — every file requires review from the repo owner.
+# Syntax: <pattern> <owner>
+# Replace @OWNER with your GitHub username or team.
+* @OWNER

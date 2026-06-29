@@ -1,0 +1,402 @@
+/* Portfolio page styles — transplanted VERBATIM from design-v2 portfolio.html
+   inline <style> block, scoped under .ds4. Page-specific classes only; shared
+   tokens/classes live in design.css + globals.css. */
+
+.ds4 .pf-wrap {
+  padding-top: 30px;
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.ds4 .pf-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.ds4 .pf-bar .who {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.ds4 .pf-bar .addr {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #fff;
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  padding: 9px 14px;
+  box-shadow: var(--sh-1);
+  white-space: nowrap;
+}
+.ds4 .pf-bar .addr .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(16, 217, 160, 0.18);
+}
+.ds4 .pf-bar .addr .a {
+  font-family: var(--f-tech);
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.ds4 .pf-bar .addr .net {
+  font-size: 11.5px;
+  color: var(--muted-2);
+}
+.ds4 .pf-bar .ro {
+  font-family: var(--f-tech);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.ds4 .pf-demo {
+  font-family: var(--f-tech);
+  font-size: 11px;
+  color: var(--muted-2);
+  white-space: nowrap;
+}
+
+.ds4 .pf-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 760px) {
+  .ds4 .pf-tiles {
+    grid-template-columns: 1fr;
+  }
+}
+.ds4 .pf-tile {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+  padding: 18px 20px;
+}
+.ds4 .pf-tile .l {
+  font-family: var(--f-tech);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ds4 .pf-tile .v {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  margin-top: 8px;
+  color: var(--ink);
+}
+.ds4 .pf-tile .s {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.ds4 .pf-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+  padding: 20px;
+}
+.ds4 .pf-card .ch {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.ds4 .pf-card .ch .eyebrow {
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+.ds4 .pf-card .ch h3 {
+  font-size: 18px;
+}
+.ds4 .pf-card .ch .right {
+  font-family: var(--f-tech);
+  font-size: 12px;
+  color: var(--muted-2);
+  white-space: nowrap;
+}
+.ds4 .pf-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+@media (max-width: 880px) {
+  .ds4 .pf-duo {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ds4 .ptbl {
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  overflow: hidden;
+}
+.ds4 .ptbl .hd,
+.ds4 .ptbl .rw {
+  display: grid;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 15px;
+}
+.ds4 .ptbl.vault .hd,
+.ds4 .ptbl.vault .rw {
+  grid-template-columns: 1.4fr 1fr 1fr;
+}
+.ds4 .ptbl.aave .hd,
+.ds4 .ptbl.aave .rw {
+  grid-template-columns: 1.2fr 0.8fr 1fr;
+}
+.ds4 .ptbl .hd {
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--f-tech);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.ds4 .ptbl .hd .r,
+.ds4 .ptbl .rw .r {
+  text-align: right;
+}
+.ds4 .ptbl .rw {
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+.ds4 .ptbl .rw:last-child {
+  border-bottom: 0;
+}
+.ds4 .ptbl .rw:hover {
+  background: var(--bg-soft);
+}
+.ds4 .ptbl .tk {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ds4 .ptbl .tk .fl {
+  font-size: 17px;
+  line-height: 1;
+}
+.ds4 .ptbl .cur {
+  font-size: 12px;
+  color: var(--muted);
+}
+.ds4 .ptbl .amt {
+  font-family: var(--f-tech);
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+}
+.ds4 .ptbl .usd {
+  font-family: var(--f-tech);
+  font-size: 11px;
+  color: var(--muted-2);
+  font-weight: 500;
+}
+.ds4 .ptbl .apy {
+  font-family: var(--f-tech);
+  font-weight: 700;
+  color: var(--yes);
+  font-size: 13px;
+  text-align: right;
+}
+.ds4 .pf-empty {
+  border: 1px dashed var(--line-2);
+  border-radius: 13px;
+  padding: 26px 18px;
+  text-align: center;
+  color: var(--muted-2);
+  font-size: 13px;
+}
+.ds4 .pf-empty a {
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.ds4 .vlb {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 15px 16px;
+  margin-bottom: 11px;
+  background: var(--bg-soft);
+}
+.ds4 .vlb:last-child {
+  margin-bottom: 0;
+}
+.ds4 .vlb .top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ds4 .vlb .id {
+  font-family: var(--f-tech);
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.ds4 .vlb .meta {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 3px;
+  white-space: nowrap;
+}
+.ds4 .vlb .cancel {
+  flex: 0 0 auto;
+  font-family: var(--f-tech);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--no);
+  background: var(--no-soft);
+  border: 1px solid #f6c9d4;
+  border-radius: 9px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: 0.14s;
+}
+.ds4 .vlb .cancel:hover {
+  background: var(--no);
+  color: #fff;
+}
+.ds4 .vlb .cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.ds4 .vlb .legs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 11px;
+}
+.ds4 .vlb .leg {
+  font-family: var(--f-tech);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--brand);
+  background: var(--bg-tint);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.ds4 .vlb .leg .fl {
+  font-size: 12px;
+}
+.ds4 .pf-note {
+  font-size: 11px;
+  color: var(--muted-2);
+  line-height: 1.6;
+  margin-top: 13px;
+}
+.ds4 .pf-foot-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+/* ── disconnected preview: blurred populated demo + floating connect card ── */
+.ds4 .pf-preview {
+  position: relative;
+  isolation: isolate;
+}
+/* the populated demo, blurred + desaturated so it reads as a teaser */
+.ds4 .pf-preview-demo {
+  filter: blur(6px) saturate(0.7) brightness(1.02);
+  -webkit-filter: blur(6px) saturate(0.7) brightness(1.02);
+  transform: scale(1.012); /* hide blurred edges */
+  transform-origin: top center;
+  pointer-events: none;
+  user-select: none;
+}
+/* soft scrim over the demo to lift the floating card and dim the sample data */
+.ds4 .pf-preview-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(244, 247, 254, 0.62) 100%);
+  pointer-events: none;
+}
+/* center the connect card over the demo */
+.ds4 .pf-preview-card-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 64px 20px;
+  pointer-events: none;
+}
+.ds4 .pf-connect-card {
+  pointer-events: auto;
+  position: sticky;
+  top: 90px;
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  padding: 34px 30px;
+  border-radius: var(--r-xl);
+  border: 1px solid rgba(212, 222, 240, 0.9);
+  /* glassy */
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: var(--sh-3);
+}
+.ds4 .pf-preview-tag {
+  display: inline-block;
+  font-family: var(--f-tech);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand);
+  background: var(--bg-tint);
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-bottom: 18px;
+}
+.ds4 .pf-connect-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: var(--bg-tint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+}
+.ds4 .pf-connect-card h3 {
+  color: var(--ink);
+}

@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # ── Secret scan ─────────────────────────────────────────────────────────────
+  gitleaks:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GITLEAKS_LICENSE not required for community use
+
+  # ── Build / test ─────────────────────────────────────────────────────────────
+  build:
+    name: Build & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          # Pinned to the version in use on dev machines (bun --version = 1.3.12).
+          # Bump this when the lockfile is regenerated on a newer bun.
+          bun-version: "1.3.12"
+
+      # Cache bun's download store; keyed on the lockfile so a lockfile change
+      # busts the cache and re-downloads.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            bun-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Type-check
+        run: bun run typecheck
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Test (node suite)
+        run: bun run test
+
+      - name: Test (component suite)
+        run: bun run test:component
+
+      - name: Build
+        run: bun run build
+
+      # ── Dependency audit ──────────────────────────────────────────────────
+      # Phase 1 (current): hard-fail on critical/high in production deps.
+      # The || true on the raw audit prevents non-zero exit from swallowing
+      # the parsed step. The grep step is the actual gate.
+      #
+      # TODO(dependency-hardening branch): once next@15.1.11 CVE-2025-29927
+      # is resolved and the lockfile is updated, remove the || true and make
+      # this a single hard-failing step. See audit doc for P1 items.
+      - name: Audit (raw output)
+        id: audit_raw
+        run: bun audit --prod 2>&1 | tee /tmp/audit_output.txt || true
+
+      - name: Audit gate — fail on critical or high
+        run: |
+          # Grep is case-insensitive; match lines that contain severity labels
+          # produced by bun audit output (e.g. "1 critical", "3 high").
+          if grep -iE '^[[:space:]]*[1-9][0-9]* (critical|high)' /tmp/audit_output.txt; then
+            echo "::error::bun audit found critical or high severity vulnerabilities in production deps."
+            exit 1
+          fi
+          echo "No critical/high vulnerabilities found."
